@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Map<String, String>> cardData = [];
+
   @override
   void initState() {
     super.initState();
@@ -51,7 +52,9 @@ class _HomePageState extends State<HomePage> {
           };
         }).toList();
 
-        // Return the list of maps containing image URLs and text data.
+        //code to load images for second gridview
+
+        // Return the list of maps containing image URLs and text data.(for very first list of images)
         return cardData;
       } else {
         // If the response status code is not 200, throw an exception.
@@ -201,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                     return const Text('Error: Failed to load data');
                   } else {
                     List<Map<String, String>> cardData = snapshot.data!;
-                    return Container(
+                    return SizedBox(
                       width: 350,
                       height: 120,
                       child: ListView.builder(
@@ -365,15 +368,39 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12.0, left: 16, right: 16),
-              child: CustomCardView2(
-                imageUrls: [
-                  'https://mbl.downloadvid.app/media/images/8.png',
-                  'https://mbl.downloadvid.app/media/images/4.png',
-                ],
-              ),
-            ),
+
+//code for second image list
+            // Using a FutureBuilder to handle data fetching and rendering
+            FutureBuilder<List<Map<String, String>>?>(
+              future: fetchData(), // Initiating data fetching
+              builder: (context, snapshot) {
+                // Checking the connection state
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Display a loading spinner if data is still being fetched
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError ||
+                    !snapshot.hasData ||
+                    snapshot.data == null) {
+                  // Handling errors or lack of data
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  // Data has been successfully fetched
+                  List<Map<String, String>> cardData = snapshot.data!;
+
+                  // Extracting URLs for the first two images from the fetched data
+                  List<String> imageUrls = cardData.take(2).map((entry) {
+                    return entry["image"]!;
+                  }).toList();
+
+                  // Displaying the custom card view with the extracted image URLs
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(top: 12.0, left: 16, right: 16),
+                    child: CustomCardView2(imageUrls: imageUrls),
+                  );
+                }
+              },
+            )
           ],
         ),
       ),

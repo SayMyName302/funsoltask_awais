@@ -18,17 +18,24 @@ class CustomCardView extends StatelessWidget {
           Container(
             width: 80,
             height: 80,
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: const Color(0xFFF95610)),
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
                 // Use CachedNetworkImage here
                 imageUrl: imageAssetPath,
                 fit: BoxFit.cover,
+                fadeInDuration:
+                    const Duration(milliseconds: 300), // Adjust as needed
+                fadeOutDuration:
+                    const Duration(milliseconds: 300), // Adjust as needed
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(width: 1, color: const Color(0xFFF95610)),
-              borderRadius: BorderRadius.circular(10),
             ),
           ),
           Positioned(

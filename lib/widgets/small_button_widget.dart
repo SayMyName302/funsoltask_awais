@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CustomImageAddWidget extends StatelessWidget {
   final String buttonText;
@@ -26,10 +26,7 @@ class CustomImageAddWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
               children: [
                 Row(
                   children: [
@@ -44,48 +41,21 @@ class CustomImageAddWidget extends StatelessWidget {
                           )
                         : Container(
                             width: 16, height: 16), // Empty space if no image
-                    Positioned(
-                      left: 21,
-                      top: 1,
-                      child: Text(
-                        buttonText,
-                        style: TextStyle(
-                          color: Color(0xFF666666),
-                          fontSize: 10,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
+                    // Remove Positioned widget here
+                    Text(
+                      buttonText,
+                      style: TextStyle(
+                        color: Color(0xFF666666),
+                        fontSize: 10,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
                       ),
                     ),
                   ],
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Custom Widget Example'),
-        ),
-        body: Center(
-          child: CustomImageAddWidget(
-            buttonText: 'Add Image with a longer text',
-            buttonColor: Color(0xFFD9D9D9),
-            imagePath: 'assets/your_image.png',
           ),
         ),
       ),
