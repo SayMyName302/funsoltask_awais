@@ -32,9 +32,9 @@ flutter_svg: For rendering SVG images for the navigation bar.
 To add these dependencies to your project, make sure to include them in your pubspec.yaml file and run flutter pub get.
 
 dependencies:
-  http: ^0.13.3
-  cached_network_image: ^3.0.0
-  flutter_svg: ^0.24.0
+  http: ^1.1.0
+  cached_network_image: ^3.3.0
+  flutter_svg: ^2.0.8
 
 3. Usage
 The project structure is organized as follows:
